@@ -9,8 +9,14 @@ return new class extends Migration {
     {
         Schema::create('order_products', function (Blueprint $table) {
             $table->id('order_product_id');
+
+            $table->integer('quantity')->default(1);
+
             $table->foreignId('product_id');
             $table->foreignId('order_id');
+
+            $table->unique(['order_id', 'stuff_id']);
+
             $table->timestamps();
         });
     }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/{product}','show')->name('products.show');
         Route::put('/{product}','update')->name('products.update');
         Route::delete('/{product}','destroy')->name('products.destroy');
+    });
+
+    Route::prefix('orders')->controller(OrderController::class)->group(function () {
+        Route::get('/','index')->name('orders.index');
+        Route::get('/{order}','show')->name('orders.show');
+        Route::delete('/{order}','destroy')->name('orders.destroy');
+    });
+
+    Route::prefix('/order-products')->controller(OrderProductController::class)->group(function () {
+        Route::get('/','index')->name('order-products.index');
+        Route::post('/','store')->name('order-products.store');
+        Route::get('/{orderProduct}','show')->name('order-products.show');
+        Route::put('/{orderProduct}','update')->name('order-products.update');
+        Route::delete('/{orderProduct}','destroy')->name('order-products.destroy');
     });
 });
 

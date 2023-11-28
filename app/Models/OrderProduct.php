@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderProduct extends Model
 {
-    public function Order(): BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class,'order_id');
     }
 
-    public function Product(): BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class,'product_id');
     }
