@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,19 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-});
-
-Route::prefix('auth')->controller(AuthController::class)->middleware('api')->group(function (){
-   Route::post('/login','login')->name('auth.login');
-   Route::post('/logout','logout')->name('auth.logout');
-   Route::post('/refresh','refresh')->name('auth.refresh');
-   Route::post('/me','me')->name('auth.me');
+Route::prefix('auth')->controller(AuthController::class)->middleware('api')->group(function () {
+    Route::post('/register','register')->name('auth.register');
+    Route::post('/login', 'login')->name('auth.login');
+    Route::post('/logout', 'logout')->name('auth.logout');
+    Route::post('/refresh', 'refresh')->name('auth.refresh');
+    Route::post('/me', 'me')->name('auth.me');
 });
