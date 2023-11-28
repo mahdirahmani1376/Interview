@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id('product_id');
             $table->string('name');
             $table->integer('price');
-            $table->integer('inventory')->default(0);
+            $table->integer('inventory');
             $table->timestamps();
         });
     }
