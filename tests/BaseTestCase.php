@@ -14,20 +14,11 @@ class BaseTestCase extends TestCase
     {
         parent::setUp();
 
-        User::truncate();
         $defaultUser = User::factory([
             'email' => 'default_user@test.com',
             'password' => 123456,
             'name' => 'default_user'
         ])->create();
-//        if (is_null($defaultUser)) {
-//            $defaultUser = User::factory()->create([
-//                'email' => 'default_user@test.com',
-//                'password' => 123456,
-//                'name' => 'default_user'
-//            ]);
-//        }
-
 
         $this->actingAs($defaultUser);
     }

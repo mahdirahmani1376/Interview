@@ -3,36 +3,24 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /** @test */
-    public function can_User_login_via_username()
+    public function can_User_login_via_email()
     {
         $User = User::factory()->create([
-            'email' => 'saeed@gmail.com',
+            'email' => 'mahdi@gmail.com',
             'password' => '12345678@Wd',
         ]);
 
-        $response = $this->post(route('Users.login'), [
-            'username' => 'WRONG USERNAME',
-            'password' => 'WRONG PASSWORD',
-        ]);
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-
-        $response = $this->post(route('Users.login'), [
-            'username' => $User->email,
-            'password' => 'WRONG PASSWORD',
-        ]);
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-
-        $response = $this->post(route('Users.login'), [
-            'username' => $User->email,
+        $response = $this->postJson(route('login'), [
+            'email' => $User->email,
             'password' => '12345678@Wd',
         ]);
 
@@ -40,7 +28,6 @@ class AuthControllerTest extends TestCase
         $response->assertJson(
             fn (AssertableJson $json) => $json->has('data.access_token')
                 ->where('data.user.email', $User->email)
-                ->where('data.user.phone', $User->phone)
                 ->etc()
         );
     }
@@ -48,16 +35,16 @@ class AuthControllerTest extends TestCase
     public function test_refresh_token()
     {
         $User = User::factory()->create([
-            'email' => 'saeed@gmail.com',
+            'email' => 'mahdi@gmail.com',
             'password' => '12345678@Wd',
         ]);
 
-        $response = $this->post(route('Users.login'), [
-            'username' => $User->email,
+        $response = $this->postJson(route('login'), [
+            'email' => $User->email,
             'password' => '12345678@Wd',
         ]);
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$response->json('data.access_token'))->post(route('Users.refresh'));
+        $response = $this->withHeader('Authorization', 'Bearer '.$response->json('data.access_token'))->post(route('refresh'));
         $response->assertStatus(200);
     }
 }

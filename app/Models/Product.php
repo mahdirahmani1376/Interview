@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
-
     protected $primaryKey = 'product_id';
 
     protected $fillable = [
