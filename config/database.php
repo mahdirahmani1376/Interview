@@ -91,8 +91,19 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
-        ],
-
+        ],[
+            'mongodb' => [
+                'driver' => 'mongodb',
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', 27017),
+                'database' => env('DB_DATABASE', 'homestead'),
+                'username' => env('DB_USERNAME', 'homestead'),
+                'password' => env('DB_PASSWORD', 'secret'),
+                'options' => [
+                    'appname' => 'homestead',
+                ],
+            ],
+        ]
     ],
 
     /*
