@@ -2,7 +2,6 @@
 
 namespace App\Data;
 
-use App\Models\Manager;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Spatie\LaravelData\Data;
@@ -19,7 +18,7 @@ class LoginUserData extends Data
     public static function rules(ValidationContext $context): array
     {
         return [
-            'email' => ['required', 'email', Rule::exists('users','email'), 'max:255', 'string'],
+            'email' => ['required', 'email', Rule::exists('users', 'email'), 'max:255', 'string'],
             'password' => ['required', 'string', 'min:6'],
         ];
     }

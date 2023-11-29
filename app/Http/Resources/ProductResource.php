@@ -17,7 +17,7 @@ class ProductResource extends JsonResource
             'inventory' => $this->inventory,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'orderProducts' => OrderProductResource::collection($this->whenLoaded('orderProducts'))
+            'orderProducts' => OrderProductResource::collection($this->whenLoaded('orderProducts')),
         ];
     }
 }

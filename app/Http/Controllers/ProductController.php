@@ -18,8 +18,8 @@ class ProductController extends Controller
             data: ProductResource::collection(
                 Product::with([
                     'orderProducts' => [
-                        'order'
-                    ]
+                        'order',
+                    ],
                 ])->get()
             )
         );
@@ -30,35 +30,32 @@ class ProductController extends Controller
         $product = $createProductAction->execute($productData);
 
         return Response::success(
-          data: ProductResource::make($product)
+            data: ProductResource::make($product)
         );
     }
 
     public function show(Product $product)
     {
         return Response::success(
-          data: ProductResource::make($product->load('orderProducts'))
+            data: ProductResource::make($product->load('orderProducts'))
         );
     }
 
-    public function update(ProductData $productData,UpdateProductAction $updateProductAction,Product $product)
+    public function update(ProductData $productData, UpdateProductAction $updateProductAction, Product $product)
     {
-        $product = $updateProductAction->execute($productData,$product);
+        $product = $updateProductAction->execute($productData, $product);
 
         return Response::success(
-          data: ProductResource::make($product)
+            data: ProductResource::make($product)
         );
     }
 
-    public function destroy(Product $product,DeleteProductAction $deleteProductAction)
+    public function destroy(Product $product, DeleteProductAction $deleteProductAction)
     {
         $deleteProductAction->execute($product);
 
         return Response::success(
-          message: trans('messages.product_deleted_successfully')
+            message: trans('messages.product_deleted_successfully')
         );
     }
-
-
-
 }

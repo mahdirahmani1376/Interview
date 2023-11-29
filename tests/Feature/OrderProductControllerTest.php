@@ -6,7 +6,6 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTestCase;
-use Tests\TestCase;
 
 class OrderProductControllerTest extends BaseTestCase
 {
@@ -27,14 +26,14 @@ class OrderProductControllerTest extends BaseTestCase
     {
         $product = Product::factory()->create();
         $data = [
-          	'product_id' => $product->product_id,
+            'product_id' => $product->product_id,
             'quantity' => $quantity = 1,
         ];
 
-        $response = $this->postJson(route('order-products.store'),$data);
+        $response = $this->postJson(route('order-products.store'), $data);
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('order_products',[
+        $this->assertDatabaseHas('order_products', [
             'product_id' => $product->product_id,
             'quantity' => $quantity,
         ]);

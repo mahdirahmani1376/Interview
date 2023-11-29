@@ -10,9 +10,9 @@ class CreateProductAction
     public function execute(ProductData $productData)
     {
         return Product::create([
-           'name' => $productData->name,
-           'price' => $productData->price,
-           'inventory' => $productData->inventory
+            'name' => $productData->name,
+            'price' => $productData->price,
+            'inventory' => $productData->inventory,
         ]);
     }
 }

@@ -7,7 +7,6 @@ use App\Actions\OrderProduct\DeleteOrderProductAction;
 use App\Actions\OrderProduct\UpdateOrderProductAction;
 use App\Data\OrderProductData;
 use App\Http\Resources\OrderProductResource;
-use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Support\Facades\Response;
 
@@ -20,8 +19,8 @@ class OrderProductController extends Controller
                 OrderProduct::with([
                     'product',
                     'order' => [
-                        'user'
-                    ]
+                        'user',
+                    ],
                 ])->get()
             )
         );
@@ -30,39 +29,39 @@ class OrderProductController extends Controller
     public function show(OrderProduct $orderProduct)
     {
         return Response::success(
-          data: OrderProductResource::make($orderProduct->load([
+            data: OrderProductResource::make($orderProduct->load([
                 'product',
                 'order' => [
-                    'user'
-                ]
-          ]))
+                    'user',
+                ],
+            ]))
         );
     }
 
-    public function store(OrderProductData $orderProductData,CreateOrderProductAction $createOrderProductAction)
+    public function store(OrderProductData $orderProductData, CreateOrderProductAction $createOrderProductAction)
     {
-        $orderProduct = $createOrderProductAction->execute($orderProductData,auth()->user());
+        $orderProduct = $createOrderProductAction->execute($orderProductData, auth()->user());
 
         return Response::success(
             data: OrderProductResource::make($orderProduct)
         );
     }
 
-    public function update(OrderProductData $orderProductData,OrderProduct $orderProduct,UpdateOrderProductAction $updateOrderProductAction)
+    public function update(OrderProductData $orderProductData, OrderProduct $orderProduct, UpdateOrderProductAction $updateOrderProductAction)
     {
-        $orderProduct = $updateOrderProductAction->execute($orderProductData,$orderProduct);
+        $orderProduct = $updateOrderProductAction->execute($orderProductData, $orderProduct);
 
         return Response::success(
             data: OrderProductResource::make($orderProduct)
         );
     }
 
-    public function destroy(OrderProduct $orderProduct,DeleteOrderProductAction $deleteOrderProductAction)
+    public function destroy(OrderProduct $orderProduct, DeleteOrderProductAction $deleteOrderProductAction)
     {
         $deleteOrderProductAction->execute($orderProduct);
 
         return Response::success(
-           message: trans('messages.order_product_deleted_successfully')
+            message: trans('messages.order_product_deleted_successfully')
         );
     }
 }

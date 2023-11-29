@@ -18,7 +18,7 @@ class OrderProductResource extends JsonResource
             'order_id' => $this->order_id,
             'item_price' => $this->item_price,
             'product' => ProductResource::make($this->whenLoaded('product')),
-            'order' => OrderResource::make($this->whenLoaded('order'))
+            'order' => OrderResource::make($this->whenLoaded('order')),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Actions\Product;
 
-use App\Data\ProductData;
 use App\Models\Product;
 
 class DeleteProductAction

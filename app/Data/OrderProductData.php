@@ -18,7 +18,7 @@ class OrderProductData extends Data
     public static function rules(ValidationContext $context): array
     {
         return [
-            'product_id' => ['required',Rule::exists('products','product_id')],
+            'product_id' => ['required', Rule::exists('products', 'product_id')],
             'quantity' => ['required', 'numeric', 'min:1', 'max:1000000'],
         ];
     }

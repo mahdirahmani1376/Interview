@@ -11,15 +11,14 @@ class UserLoginAction
 {
     public function __construct(
         public RespondWithTokenAction $respondWithTokenAction
-    )
-    {
+    ) {
     }
 
     public function execute(LoginUserData $loginUserData)
     {
         $manager = $loginUserData->getManager();
 
-        if (!$manager) {
+        if (! $manager) {
             throw new MessageException(
                 message: trans('messages.user_information_is_incorrect'),
                 code: Response::HTTP_BAD_REQUEST
@@ -31,7 +30,7 @@ class UserLoginAction
             'password' => $loginUserData->password,
         ]);
 
-        if (!$token) {
+        if (! $token) {
             throw new MessageException(
                 message: trans('messages.user_information_is_incorrect'),
                 code: Response::HTTP_BAD_REQUEST

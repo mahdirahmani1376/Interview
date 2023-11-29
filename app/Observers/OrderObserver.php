@@ -10,5 +10,4 @@ class OrderObserver
     {
         $order->orderProducts()->delete();
     }
-
 }

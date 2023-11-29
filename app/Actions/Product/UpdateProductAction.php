@@ -7,13 +7,14 @@ use App\Models\Product;
 
 class UpdateProductAction
 {
-    public function execute(ProductData $productData,Product $product)
+    public function execute(ProductData $productData, Product $product)
     {
         $product->update([
             'name' => $productData->name,
             'price' => $productData->price,
-            'inventory' => $productData->inventory
+            'inventory' => $productData->inventory,
         ]);
+
         return $product;
     }
 }

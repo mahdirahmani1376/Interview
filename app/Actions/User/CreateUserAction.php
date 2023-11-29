@@ -12,8 +12,7 @@ class CreateUserAction
 {
     public function __construct(
         public RespondWithTokenAction $respondWithTokenAction
-    )
-    {
+    ) {
     }
 
     public function execute(CreateUserData $createUserData)
@@ -32,5 +31,5 @@ class CreateUserAction
         event(new Registered($user));
 
         return $this->respondWithTokenAction->execute($token);
-	}
+    }
 }

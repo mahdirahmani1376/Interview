@@ -18,8 +18,8 @@ class ProductData extends Data
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'price' => ['required','integer','gte:0'],
-            'inventory' => ['required','integer','gte:0']
+            'price' => ['required', 'integer', 'gte:0'],
+            'inventory' => ['required', 'integer', 'gte:0'],
         ];
     }
 }

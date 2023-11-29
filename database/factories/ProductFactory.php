@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 class ProductFactory extends Factory
 {
@@ -14,8 +13,8 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'price' => rand(1,9999),
-            'inventory' => rand(0,100),
+            'price' => rand(1, 9999),
+            'inventory' => rand(0, 100),
         ];
     }
 }
