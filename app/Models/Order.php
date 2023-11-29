@@ -14,7 +14,6 @@ class Order extends BaseModel
     protected $primaryKey = 'order_id';
 
     protected $fillable = [
-        'order_id',
         'user_id',
     ];
 
