@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderProductController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,19 +17,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register')->name('register');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+    Route::post('/refresh', 'refresh')->name('refresh');
+    Route::post('/me', 'me')->name('me');
 });
 
-Route::prefix('auth')->controller(AuthController::class)->middleware('api')->group(function (){
-   Route::post('/login','login')->name('auth.login');
-   Route::post('/logout','logout')->name('auth.logout');
-   Route::post('/refresh','refresh')->name('auth.refresh');
-   Route::post('/me','me')->name('auth.me');
+Route::middleware('auth')->group(function () {
+    Route::prefix('products')->controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('products.index');
+        Route::post('/', 'store')->name('products.store');
+        Route::get('/{product}', 'show')->name('products.show');
+        Route::put('/{product}', 'update')->name('products.update');
+        Route::delete('/{product}', 'destroy')->name('products.destroy');
+    });
+
+    Route::prefix('orders')->controller(OrderController::class)->group(function () {
+        Route::get('/', 'index')->name('orders.index');
+        Route::get('/{order}', 'show')->name('orders.show');
+        Route::delete('/{order}', 'destroy')->name('orders.destroy');
+    });
+
+    Route::prefix('/order-products')->controller(OrderProductController::class)->group(function () {
+        Route::get('/', 'index')->name('order-products.index');
+        Route::post('/', 'store')->name('order-products.store');
+        Route::get('/{orderProduct}', 'show')->name('order-products.show');
+        Route::put('/{orderProduct}', 'update')->name('order-products.update');
+        Route::delete('/{orderProduct}', 'destroy')->name('order-products.destroy');
+    });
 });

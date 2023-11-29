@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseCode;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,6 +27,16 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (MessageException $e, $request) {
+            $code = $e->getCode() ?: ResponseCode::HTTP_UNPROCESSABLE_ENTITY;
+            $message = $e->getMessage() ?: trans('messages.something_went_wrong');
+
+            return Response::error(
+                message: $message,
+                code: $code,
+            );
         });
     }
 }
