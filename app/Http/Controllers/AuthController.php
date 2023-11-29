@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Auth\RespondWithTokenAction;
+use App\Actions\Auth\UserLoginAction;
 use App\Actions\Auth\UserLogoutAction;
 use App\Actions\User\CreateUserAction;
 use App\Data\CreateUserData;
+use App\Data\LoginUserData;
 use App\Exceptions\MessageException;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -19,15 +21,17 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
-    public function login()
+    public function login(
+        UserLoginAction $userLoginAction,
+        LoginUserData $loginUserData
+    )
     {
-        $credentials = request(['email', 'password']);
+        $response = $userLoginAction->execute($loginUserData);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        return $this->respondWithToken($token);
+        return Response::success(
+            message: '',
+            data: $response,
+        );
     }
 
     public function me()
@@ -38,9 +42,13 @@ class AuthController extends Controller
         );
     }
 
-    public function logout(UserLogoutAction $userLogoutAction)
+    public function logout()
     {
-        return response()->json(['message' => 'Successfully logged out']);
+        auth()->logout();
+
+        return Response::success(
+            message: trans('messages.successfully_logged_out')
+        );
     }
 
     public function refresh(
