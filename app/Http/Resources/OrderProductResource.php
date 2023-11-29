@@ -14,11 +14,11 @@ class OrderProductResource extends JsonResource
             'order_product_id' => $this->order_product_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-
             'product_id' => $this->product_id,
             'order_id' => $this->order_id,
-
-            'Product' => new ProductResource($this->whenLoaded('Product')),
+            'item_price' => $this->item_price,
+            'product' => ProductResource::make($this->whenLoaded('product')),
+            'order' => OrderResource::make($this->whenLoaded('order'))
         ];
     }
 }

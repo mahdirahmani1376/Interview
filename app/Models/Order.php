@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    use HasFactory;
     protected $primaryKey = 'order_id';
 
     protected $fillable = [
@@ -23,5 +26,19 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    protected function totalPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, array $attributes) => $this->orderProducts->sum('item_price'),
+        );
+    }
+
+    protected function totalCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, array $attributes) => $this->orderProducts()->count(),
+        );
     }
 }

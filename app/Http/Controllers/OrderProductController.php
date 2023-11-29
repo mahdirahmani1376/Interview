@@ -17,7 +17,12 @@ class OrderProductController extends Controller
     {
         return Response::success(
             data: OrderProductResource::collection(
-                OrderProduct::with('order','user')->get()
+                OrderProduct::with([
+                    'product',
+                    'order' => [
+                        'user'
+                    ]
+                ])->get()
             )
         );
     }
@@ -25,7 +30,12 @@ class OrderProductController extends Controller
     public function show(OrderProduct $orderProduct)
     {
         return Response::success(
-          data: OrderProductResource::make($orderProduct->load('order','product'))
+          data: OrderProductResource::make($orderProduct->load([
+                'product',
+                'order' => [
+                    'user'
+                ]
+          ]))
         );
     }
 

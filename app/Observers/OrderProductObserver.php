@@ -9,7 +9,7 @@ class OrderProductObserver
 {
     public function created(OrderProduct $orderProduct): void
     {
-        $orderProduct->product->inventory->decrement($orderProduct->quantity);
+        $orderProduct->product->decrement('inventory',$orderProduct->quantity);
     }
 
     public function updated(OrderProduct $orderProduct): void
@@ -18,7 +18,7 @@ class OrderProductObserver
 
     public function deleted(OrderProduct $orderProduct): void
     {
-        $orderProduct->product->inventory->increment($orderProduct->quantity);
+        $orderProduct->product->increment('inventory',$orderProduct->quantity);
     }
 
 }

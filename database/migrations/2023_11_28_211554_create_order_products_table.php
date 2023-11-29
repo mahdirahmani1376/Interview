@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('product_id');
             $table->foreignId('order_id');
 
-            $table->unique(['order_id', 'stuff_id']);
+            $table->unique(['order_id', 'product_id']);
 
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class ProductControllerTest extends BaseTestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     /** @test */
     public function can_user_view_products()
