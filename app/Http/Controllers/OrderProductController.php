@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Response;
 
 class OrderProductController extends Controller
 {
+
+    /**
+     * @OA\Get(
+     *     path="/api/order-products",
+     *     operationId="indexOrderProducts",
+     *     @OA\Response(response=200,description="Success",@OA\JsonContent())),
+     *     @OA\Response(response=400,description="Bad Request - Invalid input",@OA\JsonContent()),
+     *     @OA\Response(response=401,description="Unauthorized - Authentication failed",@OA\JsonContent())
+     * )
+     */
     public function index()
     {
         return Response::success(
@@ -26,6 +36,15 @@ class OrderProductController extends Controller
         );
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/order-products/{orderProduct}",
+     *     operationId="indexOrderProducts",
+     *     @OA\Response(response=200,description="Success",@OA\JsonContent())),
+     *     @OA\Response(response=400,description="Bad Request - Invalid input",@OA\JsonContent()),
+     *     @OA\Response(response=401,description="Unauthorized - Authentication failed",@OA\JsonContent())
+     * )
+     */
     public function show(OrderProduct $orderProduct)
     {
         return Response::success(
@@ -38,6 +57,23 @@ class OrderProductController extends Controller
         );
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/order-products",
+     *     operationId="storeOrderProducts",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="product_id", type="string", description="Product_id", example="1"),
+     *              @OA\Property(property="quantity", type="string", description="quantity", example="1"),
+     *          )
+     *      ),
+     *     @OA\Response(response=200,description="Success",@OA\JsonContent())),
+     *     @OA\Response(response=400,description="Bad Request - Invalid input",@OA\JsonContent()),
+     *     @OA\Response(response=401,description="Unauthorized - Authentication failed",@OA\JsonContent())
+     * )
+     */
     public function store(OrderProductData $orderProductData, CreateOrderProductAction $createOrderProductAction)
     {
         $orderProduct = $createOrderProductAction->execute($orderProductData, auth()->user());
@@ -47,6 +83,23 @@ class OrderProductController extends Controller
         );
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/order-products/{orderProduct}",
+     *     operationId="updateOrderProducts",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="product_id", type="string", description="Product_id", example="1"),
+     *              @OA\Property(property="quantity", type="string", description="quantity", example="1"),
+     *          )
+     *      ),
+     *     @OA\Response(response=200,description="Success",@OA\JsonContent())),
+     *     @OA\Response(response=400,description="Bad Request - Invalid input",@OA\JsonContent()),
+     *     @OA\Response(response=401,description="Unauthorized - Authentication failed",@OA\JsonContent())
+     * )
+     */
     public function update(OrderProductData $orderProductData, OrderProduct $orderProduct, UpdateOrderProductAction $updateOrderProductAction)
     {
         $orderProduct = $updateOrderProductAction->execute($orderProductData, $orderProduct);
@@ -56,6 +109,16 @@ class OrderProductController extends Controller
         );
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/order-products/{orderProduct}",
+     *     operationId="deleteOrderProducts",
+     *     tags={"Auth"},
+     *     @OA\Response(response=200,description="Success",@OA\JsonContent())),
+     *     @OA\Response(response=400,description="Bad Request - Invalid input",@OA\JsonContent()),
+     *     @OA\Response(response=401,description="Unauthorized - Authentication failed",@OA\JsonContent())
+     * )
+     */
     public function destroy(OrderProduct $orderProduct, DeleteOrderProductAction $deleteOrderProductAction)
     {
         $deleteOrderProductAction->execute($orderProduct);

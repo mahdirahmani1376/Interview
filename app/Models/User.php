@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Methods\UserMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use MongoDB\Laravel\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,UserMethod;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $primaryKey = 'user_id';
 
