@@ -5,6 +5,7 @@ namespace App\Actions\Auth;
 use App\Data\LoginUserData;
 use App\Exceptions\MessageException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserLoginAction
@@ -18,17 +19,15 @@ class UserLoginAction
     {
         $manager = $loginUserData->getManager();
 
-        if (! $manager) {
+        if (! $manager || !Hash::check($loginUserData->password, $manager->password)) {
             throw new MessageException(
                 message: trans('messages.user_information_is_incorrect'),
                 code: Response::HTTP_BAD_REQUEST
             );
         }
 
-        $token = Auth::attempt([
-            'email' => $manager->email,
-            'password' => $loginUserData->password,
-        ]);
+        $token = $manager->createToken('API Token')->plainTextToken;
+
 
         if (! $token) {
             throw new MessageException(

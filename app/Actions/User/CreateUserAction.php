@@ -23,10 +23,7 @@ class CreateUserAction
             'name' => $createUserData->name,
         ]);
 
-        $token = Auth::attempt([
-            'email' => $user->email,
-            'password' => $createUserData->password,
-        ]);
+        $token = $user->createToken('API Token')->plainTextToken;
 
         event(new Registered($user));
 
