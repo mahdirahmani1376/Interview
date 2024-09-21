@@ -1,7 +1,7 @@
 <p align="center">
 </p>
 
-## Lia Team Code Challenge
+## Code Challenge
 
 below is the list of steps to perform in order to use the project
 
