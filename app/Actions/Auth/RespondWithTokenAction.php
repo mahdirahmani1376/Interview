@@ -2,6 +2,7 @@
 
 namespace App\Actions\Auth;
 
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
