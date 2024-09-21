@@ -10,7 +10,6 @@ below is the list of steps to perform in order to use the project
 - Run cp .env.example .env
 - Run php artisan key:generate
 - Run php artisan migrate
-- php artisan jwt:secret
 - Run php artisan serve
 - Go to link localhost:8000
 - or run php artisan test to ensure project is running without problem
